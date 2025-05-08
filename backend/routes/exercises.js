@@ -18,6 +18,9 @@ router.route('/add').post((req, res) => {
     description,
     duration,
     date,
+  if (!description || !duration || !date) { 
+    return res.status(400).json({ error: 'Description, duration, and date are required' });
+  }
   });
 
   newExercise.save()
