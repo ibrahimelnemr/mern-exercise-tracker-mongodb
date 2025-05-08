@@ -35,12 +35,12 @@ export default class CreateExercise extends Component {
     const [duration, setDuration] = useState('');
     const [date, setDate] = useState('');
     const [errors, setErrors] = useState({});
-    const [errors, setErrors] = useState({});
+    const [username, setUsername] = useState('');
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
     const [date, setDate] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-        if (response.data.length > 0) {
+    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({});
     const validateForm = () => {
       let errors = {};
       if (!username) errors.username = 'Username is required';
@@ -49,10 +49,30 @@ export default class CreateExercise extends Component {
       setErrors(errors);
       return Object.keys(errors).length === 0;
     };
+    const [description, setDescription] = useState('');
+    const [duration, setDuration] = useState('');
+    const [date, setDate] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+        if (response.data.length > 0) {
+      <div style={{ color: 'red' }}>{errors.username}</div>
+      <div style={{ color: 'red' }}>{errors.description}</div>
+      <div style={{ color: 'red' }}>{errors.duration}</div>
+    const validateForm = () => {
+      let errors = {};
+      if (!username) errors.username = 'Username is required';
+      <div style={{ color: 'red' }}>{errors.description}</div>
+      <div style={{ color: 'red' }}>{errors.username}</div>
+      if (!description) errors.description = 'Description is required';
+      <div style={{ color: 'red' }}>{errors.duration}</div>
+      if (!duration || isNaN(duration) || parseFloat(duration) <= 0) errors.duration = 'Duration must be a positive number';
+      setErrors(errors);
+      return Object.keys(errors).length === 0;
+    };
           this.setState({
             users: response.data.map(user => user.username),
             username: response.data[0].username
           })
+      if (validateForm()) {
         }
       {/* Error messages */}
     const validateForm = () => {
@@ -62,6 +82,9 @@ export default class CreateExercise extends Component {
       <div style={{ color: 'red' }}>{errors.description}</div>
       if (!duration || isNaN(duration)) errors.duration = 'Duration is required and must be a number';
       <div style={{ color: 'red' }}>{errors.duration}</div>
+      } else {
+        console.error('Form validation failed', errors);
+      }
       if (!date) errors.date = 'Date is required';
       setErrors(errors);
       return Object.keys(errors).length === 0;
