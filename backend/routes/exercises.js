@@ -18,12 +18,20 @@ router.route('/add').post((req, res) => {
     description,
     duration,
     date,
+  // Validate request body
+  if (!req.body.username || !req.body.description || !req.body.duration) {
+    return res.status(400).json({ error: 'Username, description, and duration are required' });
+  }
+  if (isNaN(req.body.duration) || req.body.duration <= 0) {
+    return res.status(400).json({ error: 'Duration must be a positive number' });
+  }
   const date = new Date(req.body.date);
   if (isNaN(date)) {
     return res.status(400).json({ error: 'Invalid date format. Please use YYYY-MM-DD.' });
   }
   if (isNaN(duration)) {
     return res.status(400).json({ error: 'Duration must be a number.' });
+  //Further validation can be added here for other fields like date
   }
   if (!description || !duration || !date) { 
     return res.status(400).json({ error: 'All fields are required.' });
