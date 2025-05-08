@@ -18,6 +18,9 @@ router.route('/add').post((req, res) => {
     description,
     duration,
     date,
+  if (isNaN(duration)) {
+    return res.status(400).json({ error: 'Duration must be a number' });
+  }
   if (!description || !duration || !date) { 
     return res.status(400).json({ error: 'Description, duration, and date are required' });
   }
