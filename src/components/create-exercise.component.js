@@ -50,6 +50,7 @@ export default class CreateExercise extends Component {
       if (!duration || isNaN(duration)) newErrors.duration = 'Duration is required and must be a number';
       if (!date) newErrors.date = 'Date is required';
       setErrors(newErrors);
+          <div style={{ color: 'red' }}>{errors.date}</div>
       return Object.keys(newErrors).length === 0;
     };
     if (!description || !duration || !date) {
