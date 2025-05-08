@@ -17,6 +17,13 @@ router.route('/add').post((req, res) => {
     username,
     description,
     duration,
+  // Validate request body
+  if (!req.body.username || !req.body.description || !req.body.duration) {
+    return res.status(400).json({ error: 'Username, description, and duration are required' });
+  }
+  if (isNaN(req.body.duration) || req.body.duration <= 0) {
+    return res.status(400).json({ error: 'Duration must be a positive number' });
+  }
     date,
   // Validate request body
   if (!req.body.username || !req.body.description || !req.body.duration) {
@@ -24,6 +31,7 @@ router.route('/add').post((req, res) => {
   }
   if (isNaN(req.body.duration) || req.body.duration <= 0) {
     return res.status(400).json({ error: 'Duration must be a positive number' });
+  //Further validation can be added here for other fields like date etc.
   }
   const date = new Date(req.body.date);
   if (isNaN(date)) {
