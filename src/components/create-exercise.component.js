@@ -58,6 +58,7 @@ export default class CreateExercise extends Component {
     }
     if (isNaN(parseInt(duration))) {
       setErrorMessage('Duration must be a number');
+      if (validateForm()) {
       return;
     }
     try {
