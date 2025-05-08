@@ -67,6 +67,9 @@ export default class CreateExercise extends Component {
       setErrorMessage('Invalid date format');
       return;
     }
+      } else {
+        console.log('Form validation failed', errors);
+      }
     this.setState({
       username: e.target.value
     })
