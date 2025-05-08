@@ -18,6 +18,11 @@ router.route('/add').post((req, res) => {
     description,
     duration,
     date,
+  try {
+    new Date(date);
+  } catch (error) {
+    return res.status(400).json({ error: 'Invalid date format' });
+  }
   if (isNaN(duration)) {
     return res.status(400).json({ error: 'Duration must be a number' });
   }
