@@ -44,6 +44,14 @@ export default class CreateExercise extends Component {
   }
 
   onChangeUsername(e) {
+    const validateForm = () => {
+      let newErrors = {};
+      if (!description) newErrors.description = 'Description is required';
+      if (!duration || isNaN(duration)) newErrors.duration = 'Duration is required and must be a number';
+      if (!date) newErrors.date = 'Date is required';
+      setErrors(newErrors);
+      return Object.keys(newErrors).length === 0;
+    };
     if (!description || !duration || !date) {
       setErrorMessage('Description, duration, and date are required');
       return;
