@@ -43,6 +43,20 @@ export default class CreateExercise extends Component {
   }
 
   onChangeUsername(e) {
+    if (!description || !duration || !date) {
+      setErrorMessage('Description, duration, and date are required');
+      return;
+    }
+    if (isNaN(parseInt(duration))) {
+      setErrorMessage('Duration must be a number');
+      return;
+    }
+    try {
+      new Date(date);
+    } catch (error) {
+      setErrorMessage('Invalid date format');
+      return;
+    }
     this.setState({
       username: e.target.value
     })
