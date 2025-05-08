@@ -30,21 +30,38 @@ export default class CreateExercise extends Component {
     const [duration, setDuration] = useState('');
     const [date, setDate] = useState('');
     const [errors, setErrors] = useState({});
+    const [username, setUsername] = useState('');
+    const [description, setDescription] = useState('');
+    const [duration, setDuration] = useState('');
+    const [date, setDate] = useState('');
+    const [errors, setErrors] = useState({});
     const [errors, setErrors] = useState({});
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
     const [date, setDate] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
         if (response.data.length > 0) {
+    const validateForm = () => {
+      let errors = {};
+      if (!username) errors.username = 'Username is required';
+      if (!description) errors.description = 'Description is required';
+      if (!duration || isNaN(duration) || parseFloat(duration) <= 0) errors.duration = 'Duration must be a positive number';
+      setErrors(errors);
+      return Object.keys(errors).length === 0;
+    };
           this.setState({
             users: response.data.map(user => user.username),
             username: response.data[0].username
           })
         }
+      {/* Error messages */}
     const validateForm = () => {
       let errors = {};
+      <div style={{ color: 'red' }}>{errors.username}</div>
       if (!description) errors.description = 'Description is required';
+      <div style={{ color: 'red' }}>{errors.description}</div>
       if (!duration || isNaN(duration)) errors.duration = 'Duration is required and must be a number';
+      <div style={{ color: 'red' }}>{errors.duration}</div>
       if (!date) errors.date = 'Date is required';
       setErrors(errors);
       return Object.keys(errors).length === 0;
@@ -52,6 +69,7 @@ export default class CreateExercise extends Component {
       })
       .catch((error) => {
         console.log(error);
+      if (validateForm()) {
       })
 
         <div style={{ color: 'red' }}>{errors.description}</div>
@@ -61,6 +79,9 @@ export default class CreateExercise extends Component {
         <div style={{ color: 'red' }}>{errors.date}</div>
   onChangeUsername(e) {
     const validateForm = () => {
+      } else {
+        console.error('Form validation failed:', errors);
+      }
       let newErrors = {};
       if (!description) newErrors.description = 'Description is required';
       if (!duration || isNaN(duration)) newErrors.duration = 'Duration is required and must be a number';
