@@ -25,6 +25,7 @@ export default class CreateExercise extends Component {
   componentDidMount() {
     axios.get('http://localhost:5000/users/')
       .then(response => {
+    const [errors, setErrors] = useState({});
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
     const [date, setDate] = useState('');
