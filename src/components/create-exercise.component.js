@@ -25,6 +25,11 @@ export default class CreateExercise extends Component {
   componentDidMount() {
     axios.get('http://localhost:5000/users/')
       .then(response => {
+    const [username, setUsername] = useState('');
+    const [description, setDescription] = useState('');
+    const [duration, setDuration] = useState('');
+    const [date, setDate] = useState('');
+    const [errors, setErrors] = useState({});
     const [errors, setErrors] = useState({});
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
@@ -36,13 +41,24 @@ export default class CreateExercise extends Component {
             username: response.data[0].username
           })
         }
+    const validateForm = () => {
+      let errors = {};
+      if (!description) errors.description = 'Description is required';
+      if (!duration || isNaN(duration)) errors.duration = 'Duration is required and must be a number';
+      if (!date) errors.date = 'Date is required';
+      setErrors(errors);
+      return Object.keys(errors).length === 0;
+    };
       })
       .catch((error) => {
         console.log(error);
       })
 
+        <div style={{ color: 'red' }}>{errors.description}</div>
   }
+        <div style={{ color: 'red' }}>{errors.duration}</div>
 
+        <div style={{ color: 'red' }}>{errors.date}</div>
   onChangeUsername(e) {
     const validateForm = () => {
       let newErrors = {};
@@ -53,7 +69,10 @@ export default class CreateExercise extends Component {
           <div style={{ color: 'red' }}>{errors.duration}</div>
       setErrors(newErrors);
           <div style={{ color: 'red' }}>{errors.date}</div>
+      if (validateForm()) {
       return Object.keys(newErrors).length === 0;
+        console.log('Exercise added successfully!');
+        window.location = '/';
     };
     if (!description || !duration || !date) {
       setErrorMessage('Description, duration, and date are required');
@@ -64,6 +83,9 @@ export default class CreateExercise extends Component {
       if (validateForm()) {
       return;
     }
+      } else {
+        console.log('Form validation failed', errors);
+      }
     try {
       new Date(date);
     } catch (error) {
